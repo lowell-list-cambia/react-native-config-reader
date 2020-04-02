@@ -51,6 +51,20 @@ public class RNConfigReaderModule extends ReactContextBaseJavaModule {
             Log.d("ReactNative", "RNConfigReader: Could not access BuildConfig field " + f.getName());
           }
         }
+
+        // also add specific values from app strings.xml
+        // TODO: add *all* string values
+        final Context appContext = context.getApplicationContext();
+        final Resources appResources = appContext.getResources();
+        final String[] journiKeys = { "CodePushDeploymentKey", "JourniEnvironment", "JourniCommitHash" };
+        for (String key : journiKeys) {
+          int resourceId = appResources.getIdentifier(key, "string", className);
+          if (resourceId != 0) {
+            constants.put(key, appContext.getString(resourceId));
+          } else {
+            Log.d("ReactNative", "RNConfigReader: Could not access Journi resource string " + key);
+          }
+        }
       }
       catch (ClassNotFoundException e) {
         Log.d("ReactNative", "RNConfigReader: Could not find BuildConfig class");
