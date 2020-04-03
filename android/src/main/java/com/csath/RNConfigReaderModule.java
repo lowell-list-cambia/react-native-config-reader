@@ -56,7 +56,7 @@ public class RNConfigReaderModule extends ReactContextBaseJavaModule {
         // TODO: add *all* string values
         final Context appContext = context.getApplicationContext();
         final Resources appResources = appContext.getResources();
-        final String[] journiKeys = { "CodePushDeploymentKey", "JourniEnvironment", "JourniCommitHash" };
+        final String[] journiKeys = { "CodePushDeploymentKey", "AppEnvironment", "BuildCommitHash" };
         for (String key : journiKeys) {
           int resourceId = appResources.getIdentifier(key, "string", className);
           if (resourceId != 0) {
